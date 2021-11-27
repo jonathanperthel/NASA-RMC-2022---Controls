@@ -1,0 +1,70 @@
+option explicit ' Forces variables to be declared before use. Good practice for avoiding errors
+
+' This script is provided "as-is", without warranty of any kind,
+' expressed or implied, including but not limited to the warranties of
+' merchatability, fitness for a particular purpose and
+' noninfringemement. In no event shall Roboteq be liable for any claim,
+' damages or other liability, arising from the use of the software."
+
+' Motor self test.  
+' Ramps motor 1 to max speed forward and reverse and then stops.
+' Ramps motor 2 to max speed forward and reverse and then stops.
+' Ramps both motor 1 and motor 2 to max speed forward and reverse, and then stops.
+
+print("starting ... \r") ' Lets user know script is starting
+
+top:
+Dim forback as Integer' since option explicit, variables must be declared
+Dim leftright as Integer' since option explicit, variables must be declared
+forback = getValue(_PI, 2) ' read channel 1
+leftright = getValue(_PI, 1) ' read channel 1
+'print("Forward/Back: ", forback)
+'print("\n")
+'print("Left/Right: ", leftright)
+'print("\n")
+
+'stop
+if forback < 1600 and forback > 1200 and leftright < 1600 and leftright > 1200 then
+	'SetCommand(_GO, 1, 0) 'motor 1 stop
+	'SetCommand(_GO, 2, 0) 'motor 2 stop
+	print("stop \n")
+	
+
+'forward
+ElseIf forback > 1600 and leftright < 1600 and leftright > 1200 then
+
+	'SetCommand(_GO, 1, 300) 'motor 1 forward
+	'SetCommand(_GO, 2, 300) 'motor 2 forward
+	print("forward \n")
+	
+
+'reverse
+ElseIf forback < 1200 and leftright < 1600 and leftright > 1200 then
+	'SetCommand(_GO, 1, -300) 'motor 1 reverse
+	'SetCommand(_GO, 2, -300) 'motor 2 reverse
+	print("reverse \n")
+	
+
+'moving left
+ElseIf forback < 1600 and forback > 1200 and leftright > 1600  then
+	'SetCommand(_GO, 1, -300) 'motor 1 reverse
+	'SetCommand(_GO, 2, 300) 'motor 2 forward
+	print("left \n")
+	
+
+'moving right
+ElseIf forback < 1600 and forback > 1200 and leftright < 1200  then
+	'SetCommand(_GO, 1, 300) 'motor 1 forward
+	'SetCommand(_GO, 2, -300) 'motor 2 reverse
+	print("right \n")
+
+Else 
+	'SetCommand(_GO, 1, 0) 'motor 1 stop
+	'SetCommand(_GO, 2, 0) 'motor 2 stop
+	print("stop \n")	
+	
+end if 
+
+wait(500)
+
+Goto top
