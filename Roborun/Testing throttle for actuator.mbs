@@ -1,0 +1,22 @@
+option explicit ' Forces variables to be declared before use. Good practice for avoiding errors
+
+
+print("starting ... \r") ' Lets user know script is starting
+
+top:
+Dim ch1 as Integer' since option explicit, variables must be declared
+Dim ch2 as Integer' since option explicit, variables must be declared
+Dim diff as Integer
+Dim speed as Integer
+ch1 = getValue(_PI, 1) ' read channel 1 (this would be reading in Rudd
+ch2 = getValue(_PI, 2) ' read channel 1
+print("ch1: ", ch1)
+print("\n")
+print("Ch2: ", ch2)
+print("\n")
+
+ 
+
+wait(500)
+
+Goto top
