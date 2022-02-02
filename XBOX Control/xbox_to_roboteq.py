@@ -11,20 +11,20 @@ while true:
     int x = 500 #change to read in x value
     int y = 500 #change to read in y value
 
-    
-    if x<800 and x>200 and y>200 and y<800:
+
+    if x<300 and x>-300 and y<300 and y>-300:
         controller.dual_motor_control(0, 0)
         print("Stop")
-    if y>=800 and y<=1000 and x>200 and x<800:
+    if y>=300 and y<=1000 and x>-300 and x<300:
         controller.dual_motor_control(400, 400)
         print("forward/n")
-    elif y<=200 and y>=0 and x>200 and x<800:
+    elif y<=-300 and y>=-1000 and x>-300 and x<300:
         controller.dual_motor_control(400, 400)
         print("reverse/n")
-    elif x>=800 and x<=1000 and y>200 and y<800
+    elif x>=300 and x<=1000 and y>-300 and y<300
         controller.dual_motor_control(400, -400)
         print("right/n")
-    elif x<=200 and x>=0 and y>200 and y<800:
+    elif x<=-300 and x>=-1000 and y>-300 and y<300:
         controller.dual_motor_control(-400, 400)
         print("left/n")
     else:
