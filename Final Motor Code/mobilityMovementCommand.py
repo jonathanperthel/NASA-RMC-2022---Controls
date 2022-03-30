@@ -6,10 +6,10 @@ from dynamixel_sdk import * # Uses Dynamixel SDK library
 
 class moveRover:
 
-    def init_Roboteq(self):
+    def init_Roboteq():
         #Link to Roboteq motor controller
         controller = RoboteqHandler(debug_mode=False, exit_on_interrupt=False)
-        connected = self.controller.connect("/dev/ttyACM0") # Insert your COM port (for windows) or /dev/tty{your_port} (Commonly /dev/ttyACM0) for linux.
+        connected = controller.connect("/dev/ttyACM0") # Insert your COM port (for windows) or /dev/tty{your_port} (Commonly /dev/ttyACM0) for linux.
         return(controller)
 
     def wheelMotors(controller, x):
