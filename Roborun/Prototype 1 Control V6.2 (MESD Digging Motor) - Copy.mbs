@@ -1,0 +1,85 @@
+option explicit ' Forces variables to be declared before use. Good practice for avoiding errors
+
+
+print("starting ... \r") ' Lets user know script is starting
+
+top:
+Dim ch1 as Integer' since option explicit, variables must be declared
+Dim ch2 as Integer' since option explicit, variables must be declared
+Dim diff as Integer
+Dim speed as Integer
+ch1 = getValue(_PI, 1) ' read channel 1
+ch2 = getValue(_PI, 2) ' read channel 2
+print("Ch1: ", ch1)
+print("\n")
+print("Ch2: ", ch2)
+print("\n")
+
+
+'stop
+if (ch1 < 1600 and ch1 > 1300)  then
+	SetCommand(_GO, 1, 0) 'motor 1 stop
+	print("stop \n")
+	
+
+'forward
+ElseIf (ch1 > 1600 and ch1 < 1900) then
+	
+	diff = abs(1900 - ch2)
+	diff = abs(diff - 300)/10 ' this produces a value from 5 to 30
+	'print(diff)
+	speed = diff * 20
+	SetCommand(_GO, 1, speed) 'motor 1 forward
+	print("forward \n")
+	print(speed)
+	print("\n")
+	
+
+'reverse
+ElseIf (ch1 < 1300 and ch1 > 1000) then
+	diff = abs(1300 - ch2)/10
+	speed = diff * 20
+	'print(diff)
+	'print("\n")
+	SetCommand(_GO, 1, -speed) 'motor 1 reverse
+	print("reverse \n")
+	print(-speed)
+	print("\n")
+	
+
+Else 
+	SetCommand(_GO, 1, 0) 'motor 1 stop
+	print("stop \n")	
+	
+end if 
+
+'stop
+if (ch2 > 1700 or ch2 <1000)  then
+	SetCommand(_GO, 2, 0) 'motor 2 stop
+	print("stop \n")
+	
+
+'forward
+ElseIf (ch2 > 1400 and ch2 < 1750) then
+	
+	diff = abs(1700 - ch2)
+	diff = abs(diff - 300)/10 ' this produces a value from 5 to 30
+	'print(diff)
+	speed = diff * 20
+	SetCommand(_GO, 2, speed) 'motor 2 forward
+	print("forward \n")
+	print(speed)
+	print("\n")
+	
+
+Else 
+	SetCommand(_GO, 2, 0) 'motor 2 stop
+	print("stop \n")	
+	
+end if 
+
+
+wait(500)
+
+Goto top
+

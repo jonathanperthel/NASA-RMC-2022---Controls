@@ -8,12 +8,19 @@ class moveRover:
 
     def init_Roboteq():
         #Link to Roboteq motor controller
-        controller = RoboteqHandler(debug_mode=False, exit_on_interrupt=False)
-        connected = controller.connect("/dev/ttyACM0") # Insert your COM port (for windows) or /dev/tty{your_port} (Commonly /dev/ttyACM0) for linux.
+        controller = RoboteqHandler(debug_mode=True, exit_on_interrupt=True)
+        connected = controller.connect("/dev/ttyACM1") # Insert your COM port (for windows) or /dev/tty{your_port} (Commonly /dev/ttyACM0) for linux.
         return(controller)
 
     def wheelMotors(controller, x):
-        controller.dual_motor_control(x, x)
+        #controller.dual_motor_control(x, x)
+        #battery_amps = controller.read_value(cmds.READ_VOLTS, 1)
+        controller_volts1 = controller.read_value("@01?T", 0)
+        controller_volts2 = controller.read_value("@02?T", 0)
+        strBase = "@02!G 1 "
+        outputString = strBase + str(x) + ''
+        controller.send_raw_command(outputString)
+        return(controller_volts2)
 
     def servoSetup():
         if os.name == 'nt':
@@ -83,8 +90,8 @@ class moveRover:
             print("Succeeded to open the port")
         else:
             print("Failed to open the port")
-            print("Press any key to terminate...")
-            getch()
+            #print("Press any key to terminate...")
+            #getch()
             quit()
 
 
@@ -93,8 +100,8 @@ class moveRover:
             print("Succeeded to change the baudrate")
         else:
             print("Failed to change the baudrate")
-            print("Press any key to terminate...")
-            getch()
+           # print("Press any key to terminate...")
+            #getch()
             quit()
         #get started 
         #Set port baudrate
@@ -103,7 +110,7 @@ class moveRover:
         else:
             print("Failed to change the baudrate")
             print("Press any key to terminate...")
-            getch()
+            #getch()
             quit()
 
         # Enable Dynamixel Torque
@@ -128,6 +135,9 @@ class moveRover:
         DXL_ID3 = 3
         DXL_ID4 = 4
         ADDR_GOAL_POSITION          = 116
+        ADDR_TORQUE_ENABLE          = 64
+        TORQUE_ENABLE               = 1     # Value for enabling the torque
+        TORQUE_DISABLE              = 0     # Value for disabling the torque
        
         # Enable Dynamixel Torque
         dxl_comm_result1, dxl_error1 = packetHandler.write1ByteTxRx(portHandler, DXL_ID1, ADDR_TORQUE_ENABLE, TORQUE_ENABLE)
