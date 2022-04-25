@@ -12,15 +12,41 @@ class moveRover:
         connected = controller.connect("/dev/ttyACM1") # Insert your COM port (for windows) or /dev/tty{your_port} (Commonly /dev/ttyACM0) for linux.
         return(controller)
 
-    def wheelMotors(controller, x):
+    #Wheel motors are on Node 1 Channel 1
+    def wheelMotors(controller, vel):
         #controller.dual_motor_control(x, x)
         #battery_amps = controller.read_value(cmds.READ_VOLTS, 1)
         controller_volts1 = controller.read_value("@01?T", 0)
         controller_volts2 = controller.read_value("@02?T", 0)
-        strBase = "@02!G 1 "
-        outputString = strBase + str(x) + ''
+        strBase = "@01!G 1 "
+        outputString = strBase + str(vel) + ''
         controller.send_raw_command(outputString)
         return(controller_volts2)
+
+    #Digging Motor is on Node 1 Channel 2
+    def digMotor(controller, vel):
+        #controller_volts1 = controller.read_value("@01?T", 0)
+        strBase = "@01!G 2 "
+        outputString = strBase + str(vel) + ''
+        controller.send_raw_command(outputString)
+        return(1)
+
+    #Digging Actuator is on Node 2 channel 1
+    def digActuator(controller, vel):
+        #controller_volts2 = controller.read_value("@02?T", 0)
+        strBase = "@02!G 1 "
+        outputString = strBase + str(vel) + ''
+        controller.send_raw_command(outputString)
+        return(1)
+    
+
+    #Dump Actuators are Node 2 channel 2
+    def dumpActuator(controller, vel):
+        #controller_volts2 = controller.read_value("@02?T", 0)
+        strBase = "@02!G 2 "
+        outputString = strBase + str(vel) + ''
+        controller.send_raw_command(outputString)
+        return(1)
 
     def servoSetup():
         if os.name == 'nt':
