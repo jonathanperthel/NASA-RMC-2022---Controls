@@ -1,6 +1,6 @@
 from mobilityMovementCommand import moveRover
 
-#port, pack = moveRover.servoSetup()
+port, pack = moveRover.servoSetup()
 cont = moveRover.init_Roboteq()
 
 print(cont)
